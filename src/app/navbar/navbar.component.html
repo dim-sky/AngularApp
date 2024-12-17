@@ -2,15 +2,15 @@
 <header class="navbar">
     <div class="navbar-container">
       <!-- Logo Section -->
-      <div class="logo">
-        <a href="/">My App</a>
+      <div class="logo"> 
+        <h2>{{this.appName}}</h2>
       </div>
   
       <!-- Navigation Links Section -->
       <nav class="nav-links">
-        <a href="/">Home</a>
-        <a href="/about">About</a>
-        <a href="/contact">Contact</a>
+        <button class="link-button" (click)="homeClicked('home')">{{this.home}}</button>
+        <button class="link-button" (click)="homeClicked('about')">{{this.about}}</button>
+        <button class="link-button" (click)="homeClicked('contact')">{{this.contact}}</button>
       </nav>
   
       <!-- User Actions (Logout Button) -->

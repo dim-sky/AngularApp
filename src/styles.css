@@ -1,1 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
+.link-button {
+    background: none;  /* Remove the button background */
+    border: none;      /* Remove the border */
+    color: rgb(255, 255, 255);       /* Make the text color blue to resemble a link */
+    text-decoration: underline;  /* Underline the text */
+    font: inherit;     /* Inherit the font style from the parent */
+    cursor: pointer;   /* Change the cursor to a pointer when hovering */
+    padding: 0;         /* Remove any padding */
+    text-decoration: none; /* Remove underline */
+  }
+  
+  .link-button:hover {
+    color: burlywood;    /* Darker blue on hover */
+    text-decoration: none;  /* Remove the underline on hover */
+  }
+  
