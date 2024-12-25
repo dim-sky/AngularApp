@@ -12,4 +12,12 @@ export class CalendarComponent {
   view: string = 'month';
   viewDate: Date = new Date();
   events: any[] = [];
+
+  onDayClicked(dataFromCLick: any): void {
+    alert("Date Clicked");
+    console.log(dataFromCLick);
+    // Handle the click event logic here, e.g., show event details, select the date, etc.
+  }
+
+
 }

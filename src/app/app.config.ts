@@ -6,11 +6,13 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { I18nPluralPipe } from '@angular/common';
 import { CalendarA11y } from 'angular-calendar';
+import { provideHttpClient } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
+    provideHttpClient(),
     provideClientHydration(withEventReplay()),
     // Add necessary services for avoiding circular dependency
     I18nPluralPipe,
