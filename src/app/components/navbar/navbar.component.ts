@@ -4,6 +4,7 @@ import { MyHttpService } from '../../services/MyHttpService';
 import { response } from 'express';
 import { error } from 'console';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -13,7 +14,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class NavbarComponent {
 
-  constructor(private myHttpService: MyHttpService, private http: HttpClient){}
+  constructor(private myHttpService: MyHttpService, private http: HttpClient,private router: Router){}
 
   appName = AppStrings.appName;
   home = AppStrings.home;
@@ -36,6 +37,11 @@ export class NavbarComponent {
 
   handleHomeError(error: any){
     console.log(error);
+  }
+
+  logout(): void {
+    localStorage.removeItem('authToken');
+    this.router.navigate(['/login']);
   }
 
   // homeClicked(name: string){

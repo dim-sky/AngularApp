@@ -9,12 +9,14 @@ import { register } from "module";
 export class endpointsService{
 
     private baseUrl = 'http://localhost:8080';
-    private auth = '/api/auth';
+    private auth = '/auth';
+    private user = '/api/user';
 
 
     endpoints = {
         login: this.baseUrl + this.auth + "/login",
-        register: this.baseUrl + this.auth + "/register"
+        register: this.baseUrl + this.auth + "/register",
+        userDetails: this.baseUrl + this.user + "/userDetails"
     }
     
 }
