@@ -1,5 +1,8 @@
 import { Injectable } from "@angular/core"
 import { UserDetails } from "../models/otherModels/userDetails";
+import { AppStrings } from "../../resources/app.strings";
+
+import { AuthService } from "./authService";
 
 
 @Injectable({
@@ -8,14 +11,18 @@ import { UserDetails } from "../models/otherModels/userDetails";
 export class UserService {
 
 
-    token: String | undefined;
+    token: string | undefined;
+    role: string | undefined | null;
     
     userDetails: UserDetails | undefined;
   
-    constructor() {}
+    constructor(private authService: AuthService) {}
 
-    setToken(token: String){
+    setToken(token: string){
       this.token = token;
+
+      //also roles is being setted from token
+      this.role = this.authService.getRoleFromToken(token);
     }
 
     getToken(){
@@ -41,6 +48,30 @@ export class UserService {
       
       return null;
     }
+
+
+    isOrganization(): boolean {
+      if (!this.role)
+        return false;
+      
+      return (this.role == AppStrings.roles.organization)
+    }
+
+    isVolunteer(): boolean {
+      if (!this.role)
+        return false;
+      
+      return (this.role == AppStrings.roles.volunteer)
+    }
+
+    isAdmin(): boolean {
+      if (!this.role)
+        return false;
+      
+      return (this.role == AppStrings.roles.admin)
+    }
+
+
   }
   
   

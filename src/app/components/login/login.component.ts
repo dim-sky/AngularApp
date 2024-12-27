@@ -1,9 +1,9 @@
 import { Input, Component, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from '../../services/authService';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
+import { AuthService } from '../../services/authService';
 import { MyHttpService } from '../../services/MyHttpService';
 import { loginRequest } from '../../models/login/loginRequest';
 import { UserService } from '../../services/userService';
@@ -53,27 +53,26 @@ export class LoginComponent {
         console.log('Hello World!');
         console.log(response);
         this.userService.setToken(response['token']);
-        
 
-        this.myHttp.getUserDetails().subscribe(
-          (response) => {
-            console.log(response);
-            this.userService.setUserDetails(response);
-            this.router.navigate(['/']);
-          },
-          (error) => {
-            console.log('error')
-          }
-        )
+        if( this.userService.isOrganization() || this.userService.isVolunteer()){
+          this.router.navigate(['/home']);
+        }
 
+        if( this.userService.isAdmin()){
+          this.router.navigate(['/admin']);
+        }
 
-        
       },
       (error) => {
         console.log(error);
       });
 
     
+  }
+
+
+  goToRegisterPage(){
+    this.router.navigate(['/register'])
   }
 
   
