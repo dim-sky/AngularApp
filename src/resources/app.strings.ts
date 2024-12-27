@@ -7,5 +7,13 @@ export const AppStrings = {
     home: 'Home',
     about: 'About Us',
     contact: 'Contact',
+
+
+    roles: {
+      volunteer: 'ROLE_VOLUNTEER',
+      organization: 'ROLE_ORGANIZATION',
+      admin: 'ROLE_ADMIN'
+    }
+
   };
   
