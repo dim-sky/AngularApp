@@ -9,6 +9,7 @@ import { loginRequest } from '../../models/login/loginRequest';
 import { UserService } from '../../services/userService';
 import { NavigationService } from '../../services/navigationService';
 import { error } from 'console';
+import { UserDetails } from '../../models/otherModels/userDetails';
 
 
 @Component({
@@ -52,24 +53,36 @@ export class LoginComponent {
 
     this.myHttp.logIn(request).subscribe(
       (response) => {
-        // console.log('Hello World!');
-        // console.log(response);
+        console.log('Hello World!');
+        console.log(response);
 
         
         this.userService.setToken(response['token']);
-        this.navigationService.goToHomePage()
-        
+        this.getUserDetailsAndGoToHomePage();      
       },
       (error) => {
         console.log(error);
-      });
-
-    
+      });    
   }
 
 
   goToRegisterPage(){
     this.router.navigate(['/register'])
+  }
+
+  
+  getUserDetailsAndGoToHomePage(){
+    this.myHttp.getUserDetailsReq().subscribe(
+      (response: UserDetails) => {
+        // console.log(response);
+        this.userService.setUserDetails(response);
+        this.navigationService.goToHomePage();
+      },
+      (error) => {
+        console.log('error')
+      }
+    )
+    
   }
 
   

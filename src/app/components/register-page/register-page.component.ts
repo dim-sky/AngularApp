@@ -59,7 +59,6 @@ export class RegisterPageComponent {
       isAuthenticated: false,
       name: this.f['name'].value,
       role: role
-
     }
 
     console.log(request);

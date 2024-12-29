@@ -1,10 +1,14 @@
+import { EventModel } from "./eventDetails";
+import { UserRole } from "./userRole";
+
 export interface UserDetails{
-    eventId: number | undefined;
-    eventName: string | undefined;
-    eventDescription: string | undefined;
-    eventLocation: string | undefined;
-    eventDate: string | undefined;
-    eventStartTime: string | undefined;
-    maxNumberOfPeople: number | undefined;
+    authenticated: boolean;
+    email: string
+    name: string
+    organizedEvents: Array<EventModel>
+    role: UserRole
+    userId: number
+    userName: string
+    volunteeredEvents: Array<EventModel>
 
 }

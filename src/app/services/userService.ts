@@ -12,9 +12,8 @@ export class UserService {
 
 
     token: string | undefined;
-    role: string | undefined | null;
     
-    userDetails: UserDetails | undefined;
+    userDetails!: UserDetails;
   
     constructor(private authService: AuthService) {}
 
@@ -22,7 +21,9 @@ export class UserService {
       this.token = token;
 
       //also roles is being setted from token
-      this.role = this.authService.getRoleFromToken(token);
+      // this.role = this.authService.getRoleFromToken(token);
+      // console.log("AAAAAAAAAAaa");
+      // console.log(this.role);
     }
 
     getToken(){
@@ -30,14 +31,21 @@ export class UserService {
     }
   
     
-    setUserDetails(userDetails: UserDetails): void {
-      userDetails.eventId = userDetails.eventId;
-      userDetails.eventName = userDetails.eventName;
-      userDetails.eventDescription = userDetails.eventDescription;
-      userDetails.eventLocation = userDetails.eventLocation;
-      userDetails.eventDate = userDetails.eventDate;
-      userDetails.eventStartTime = userDetails.eventStartTime;
-      userDetails.maxNumberOfPeople = userDetails.maxNumberOfPeople;
+    setUserDetails(data: UserDetails): void {
+      this.userDetails = {
+        authenticated: data.authenticated,
+        email: data.email,
+        name: data.name,
+        organizedEvents: data.organizedEvents,
+        role: data.role,
+        userId: data.userId,
+        userName: data.userName,
+        volunteeredEvents: data.volunteeredEvents
+
+      }
+      
+      console.log("User Details set:")
+      console.log(this.userDetails)
     }
   
     
@@ -51,24 +59,24 @@ export class UserService {
 
 
     isOrganization(): boolean {
-      if (!this.role)
+      if (!this.userDetails.role.roleName)
         return false;
       
-      return (this.role == AppStrings.roles.organization)
+      return (this.userDetails.role.roleName == AppStrings.roles.organization)
     }
 
     isVolunteer(): boolean {
-      if (!this.role)
+      if (!this.userDetails.role.roleName)
         return false;
       
-      return (this.role == AppStrings.roles.volunteer)
+      return (this.userDetails.role.roleName == AppStrings.roles.volunteer)
     }
 
     isAdmin(): boolean {
-      if (!this.role)
+      if (!this.userDetails.role.roleName)
         return false;
       
-      return (this.role == AppStrings.roles.admin)
+      return (this.userDetails.role.roleName == AppStrings.roles.admin)
     }
 
 

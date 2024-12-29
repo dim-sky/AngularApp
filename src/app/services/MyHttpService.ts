@@ -29,7 +29,7 @@ export class MyHttpService {
     return this.http.post(this.endpointsService.endpoints.register, request)
   }
 
-  getUserDetails(): Observable<any>{
+  getUserDetailsReq(): Observable<any>{
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.userService.getToken()}`,
     });

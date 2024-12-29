@@ -12,14 +12,20 @@ export class NavigationService  {
 
 
     goToHomePage(){
-        if( this.userService.isOrganization() || this.userService.isVolunteer()){
-            this.router.navigate(['/home']);
-          }
-  
-          if( this.userService.isAdmin()){
-            this.router.navigate(['/admin']);
-          }
-  
+      // console.log("Is user Admin????");
+      // console.log(this.userService.isAdmin());
+      if( this.userService.isAdmin()){
+        this.router.navigate(['/admin']);
+        return
+      }
+
+        console.log("About To Navigate!");
+        console.log(this.userService.getUserDetails()?.authenticated);
+      if (!this.userService.getUserDetails()?.authenticated){
+        this.router.navigate(['/unAuth']);
+      } else {
+        this.router.navigate(['/home']);
+      }
     }
 
 

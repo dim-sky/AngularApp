@@ -5,6 +5,7 @@ import { NavbarComponent } from '../navbar/navbar.component';
 import { MyHttpService } from '../../services/MyHttpService';
 import { UserService } from '../../services/userService';
 
+
 @Component({
   selector: 'app-home-page',
   imports: [CalendarComponent, NavbarComponent],
@@ -13,25 +14,12 @@ import { UserService } from '../../services/userService';
 })
 export class HomePageComponent {
 
-  constructor(private myHttp: MyHttpService, private userService: UserService){}
+  constructor(){}
 
   ngOnInit(){
-    this.getUserDetails();
   }
 
 
 
-  getUserDetails(){
-    this.myHttp.getUserDetails().subscribe(
-      (response) => {
-        console.log(response);
-        this.userService.setUserDetails(response);
-      },
-      (error) => {
-        console.log('error')
-      }
-    )
-    
-  }
 
 }
