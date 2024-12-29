@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { UserService } from './userService';
 import { loginRequest } from '../models/login/loginRequest';
 import { endpointsService } from './endpointsService';
+import { registerRequest } from '../models/register/registerRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,10 @@ export class MyHttpService {
     return this.http.post(this.endpointsService.endpoints.login, request)
   }
 
+  register(request: registerRequest):  Observable<any>{
+    return this.http.post(this.endpointsService.endpoints.register, request)
+  }
+
   getUserDetails(): Observable<any>{
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.userService.getToken()}`,
@@ -31,6 +36,8 @@ export class MyHttpService {
     console.log('sending request to: ' + this.endpointsService.endpoints.userDetails);
     return this.http.get(this.endpointsService.endpoints.userDetails, { headers });
   }
+
+
 
 }
 

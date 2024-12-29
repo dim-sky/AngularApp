@@ -7,6 +7,7 @@ import { AuthService } from '../../services/authService';
 import { MyHttpService } from '../../services/MyHttpService';
 import { loginRequest } from '../../models/login/loginRequest';
 import { UserService } from '../../services/userService';
+import { NavigationService } from '../../services/navigationService';
 import { error } from 'console';
 
 
@@ -26,7 +27,8 @@ export class LoginComponent {
     private authService: AuthService,
     private router: Router,
     private myHttp: MyHttpService,
-    private userService: UserService
+    private userService: UserService,
+    private navigationService: NavigationService
   ) {
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
@@ -50,18 +52,13 @@ export class LoginComponent {
 
     this.myHttp.logIn(request).subscribe(
       (response) => {
-        console.log('Hello World!');
-        console.log(response);
+        // console.log('Hello World!');
+        // console.log(response);
+
+        
         this.userService.setToken(response['token']);
-
-        if( this.userService.isOrganization() || this.userService.isVolunteer()){
-          this.router.navigate(['/home']);
-        }
-
-        if( this.userService.isAdmin()){
-          this.router.navigate(['/admin']);
-        }
-
+        this.navigationService.goToHomePage()
+        
       },
       (error) => {
         console.log(error);
