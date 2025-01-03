@@ -19,8 +19,8 @@ export class NavigationService  {
         return
       }
 
-        console.log("About To Navigate!");
-        console.log(this.userService.getUserDetails()?.authenticated);
+        // console.log("About To Navigate!");
+        // console.log(this.userService.getUserDetails()?.authenticated);
       if (!this.userService.getUserDetails()?.authenticated){
         this.router.navigate(['/unAuth']);
       } else {

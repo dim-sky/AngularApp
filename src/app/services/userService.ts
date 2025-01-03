@@ -41,11 +41,7 @@ export class UserService {
         userId: data.userId,
         userName: data.userName,
         volunteeredEvents: data.volunteeredEvents
-
       }
-      
-      console.log("User Details set:")
-      console.log(this.userDetails)
     }
   
     

@@ -79,7 +79,7 @@ export class LoginComponent {
         this.navigationService.goToHomePage();
       },
       (error) => {
-        console.log('error')
+        console.log(error);
       }
     )
     

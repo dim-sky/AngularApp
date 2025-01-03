@@ -1,0 +1,13 @@
+.custom-event {
+    background-color: #1e90ff;
+    color: white;
+    padding: 5px;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 12px;
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }

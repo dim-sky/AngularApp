@@ -6,6 +6,7 @@ import { UserService } from './userService';
 import { loginRequest } from '../models/login/loginRequest';
 import { endpointsService } from './endpointsService';
 import { registerRequest } from '../models/register/registerRequest';
+import { createEventRequest } from '../models/createEvent/createEvent.Request';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +37,37 @@ export class MyHttpService {
     console.log('sending request to: ' + this.endpointsService.endpoints.userDetails);
     return this.http.get(this.endpointsService.endpoints.userDetails, { headers });
   }
+
+  getUnAuthenticatedUsers(): Observable<any> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.userService.getToken()}`,
+    });
+    return this.http.get(this.endpointsService.endpoints.notAuthenticated,  { headers })
+  }
+
+  approveUser(userId: number): Observable<any> {
+    const url = this.endpointsService.approveUserUrlBuilder(userId);
+    console.log("test")
+    console.log(url);
+    console.log("token")
+    console.log(this.userService.getToken());
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.userService.getToken()}`,
+    });
+    console.log(headers);
+    return this.http.put(url, null, { headers })
+  }
+
+  createEvent(request: createEventRequest): Observable<any> {
+    const url = this.endpointsService.endpoints.createEvent;
+    console.log("About to make a request at this url: ");
+    console.log( url);
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.userService.getToken()}`,
+    });
+    return this.http.post(url, request,{ headers });
+  }
+
 
 
 

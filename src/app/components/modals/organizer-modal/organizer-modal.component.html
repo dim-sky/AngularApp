@@ -1,0 +1,61 @@
+<h2 mat-dialog-title>Create New Event</h2>
+    <mat-dialog-content>
+      <form [formGroup]="eventForm" class="event-form">
+        <mat-form-field appearance="fill">
+          <mat-label>Event Name</mat-label>
+          <input matInput formControlName="eventName" required>
+          <mat-error *ngIf="eventForm.get('eventName')?.hasError('required')">
+            Event name is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Description</mat-label>
+          <textarea matInput formControlName="eventDescription" required rows="4"></textarea>
+          <mat-error *ngIf="eventForm.get('eventDescription')?.hasError('required')">
+            Description is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Location</mat-label>
+          <input matInput formControlName="eventLocation" required>
+          <mat-error *ngIf="eventForm.get('eventLocation')?.hasError('required')">
+            Location is required
+          </mat-error>
+        </mat-form-field>
+
+        <!-- <mat-form-field appearance="fill">
+          <mat-label>Date</mat-label>
+          <input matInput type="date" formControlName="eventDate" required>
+          <mat-error *ngIf="eventForm.get('eventDate')?.hasError('required')">
+            Date is required
+          </mat-error>
+        </mat-form-field> -->
+
+        <mat-form-field appearance="fill">
+          <mat-label>Start Time</mat-label>
+          <input matInput type="time" formControlName="eventStartTime" required>
+          <mat-error *ngIf="eventForm.get('eventStartTime')?.hasError('required')">
+            Start time is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Maximum Number of People</mat-label>
+          <input matInput type="number" formControlName="eventMaxNumberOfPeople" required min="1">
+          <mat-error *ngIf="eventForm.get('eventMaxNumberOfPeople')?.hasError('required')">
+            Maximum number of people is required
+          </mat-error>
+          <mat-error *ngIf="eventForm.get('eventMaxNumberOfPeople')?.hasError('min')">
+            Must be at least 1 person
+          </mat-error>
+        </mat-form-field>
+      </form>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+      <button mat-button (click)="onCancel()">Cancel</button>
+      <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!eventForm.valid">
+        Create Event
+      </button>
+    </mat-dialog-actions>

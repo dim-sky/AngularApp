@@ -1,0 +1,15 @@
+.event-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 350px;
+    padding: 16px 0;
+  }
+  mat-form-field {
+    width: 100%;
+  }
+
+  .disabled-day {
+    pointer-events: none; /* Disables any interaction */
+    opacity: 0.5; /* Makes the day appear disabled */
+  }
