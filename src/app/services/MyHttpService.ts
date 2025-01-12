@@ -47,10 +47,10 @@ export class MyHttpService {
 
   approveUser(userId: number): Observable<any> {
     const url = this.endpointsService.approveUserUrlBuilder(userId);
-    console.log("test")
-    console.log(url);
-    console.log("token")
-    console.log(this.userService.getToken());
+    // console.log("test")
+    // console.log(url);
+    // console.log("token")
+    // console.log(this.userService.getToken());
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.userService.getToken()}`,
     });
@@ -60,14 +60,22 @@ export class MyHttpService {
 
   createEvent(request: createEventRequest): Observable<any> {
     const url = this.endpointsService.endpoints.createEvent;
-    console.log("About to make a request at this url: ");
-    console.log( url);
+    // console.log("About to make a request at this url: ");
+    // console.log( url);
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.userService.getToken()}`,
     });
     return this.http.post(url, request,{ headers });
   }
 
+
+  getAllEvents(): Observable<any>{
+    const url = this.endpointsService.endpoints.getAllEvents;
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.userService.getToken()}`,
+    });
+    return this.http.get(url, {headers});
+  }
 
 
 

@@ -20,6 +20,7 @@ export class endpointsService{
         userDetails: this.baseUrl + this.user + "/userDetails",
         notAuthenticated: this.baseUrl + this.user + "/users/notAuthenticated",
         createEvent: this.baseUrl + this.event + "/create",
+        getAllEvents: this.baseUrl + this.event + "/all",
     }
 
     approveUserUrlBuilder(userId: number){

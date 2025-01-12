@@ -7,8 +7,11 @@ import { UserService } from '../../services/userService';
 import { MatDialog } from '@angular/material/dialog';
 import { CalendarEvent } from 'angular-calendar';
 import { eventService } from '../../services/eventService';
+import { MyHttpService } from '../../services/MyHttpService';
 
 import { addHours } from 'date-fns';
+import { response } from 'express';
+import { error } from 'console';
 
 @Component({
   selector: 'app-calendar',
@@ -34,32 +37,42 @@ export class CalendarComponent {
     return date < today ? 'disabled-day' : '';
   }
 
-  constructor(private userService: UserService, private dialog: MatDialog, private eventService: eventService){
+  constructor(private userService: UserService, private dialog: MatDialog, private eventService: eventService, private myHttp: MyHttpService){
+    this.getAllEvents();
     this.today.setHours(0, 0, 0, 0);
     this.events = this.eventService.getEvents();
   }
 
   onDayClicked(dataFromCLick: any): void {
-     if (dataFromCLick.day.date < this.today){
+     if (dataFromCLick.day.date < this.today && this.userService.isOrganization()){
       alert("Η ημερομηνία που επιλέξατε δεν είναι έγκυρη. Επιλλέξτε μελλοντική ημερομηνία")
       return;
      }
-    alert("Date Clicked");
-    console.log(dataFromCLick);
+    // alert("Date Clicked");
+    // console.log(dataFromCLick);
     
-    if (this.userService.isOrganization())
-      this.openOrgModal(dataFromCLick.day.date) 
 
+    if (this.userService.isOrganization())
+      this.openOrgModal(dataFromCLick.day.date, false, null) 
+    }
+
+  onEventClicked({ event }: { event: CalendarEvent }): void {
+    this.openOrgModal(new Date(), true, event) 
+    console.log('Event details:', true);
+    console.log(event)
+    // Additional logic, such as opening a modal or navigating to a detail page
   }
 
 
-  openOrgModal(datePicked: Date) {
+  openOrgModal(datePicked: Date, eventClicked: boolean, eventData: CalendarEvent | null) {
     const dialogRef = this.dialog.open(OrganizerModalComponent, {
       width: '550px',
       height: '550px',
       // other configuration options
       data: { 
-        date: datePicked
+        date: datePicked,
+        eventClicked: eventClicked,
+        eventData: eventData
        }
     });
 
@@ -69,10 +82,14 @@ export class CalendarComponent {
     });
   }
 
-  onEventClicked({ event }: { event: CalendarEvent }): void {
-    alert(`Event clicked: ${event.title}`);
-    console.log('Event details:', event);
-    // Additional logic, such as opening a modal or navigating to a detail page
+  getAllEvents(){
+    if (this.userService.isVolunteer()){
+      this.myHttp.getAllEvents().subscribe((response) => {
+        this.events = this.eventService.transformEvents(response);
+      }, (error) => {
+        console.log(error);
+      })
+    }
   }
 
   

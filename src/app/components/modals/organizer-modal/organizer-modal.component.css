@@ -13,3 +13,7 @@
     pointer-events: none; /* Disables any interaction */
     opacity: 0.5; /* Makes the day appear disabled */
   }
+
+  mat-error {
+    color: red;    /* or any specific red shade you prefer */
+  }

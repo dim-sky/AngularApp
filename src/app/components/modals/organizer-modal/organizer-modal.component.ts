@@ -11,6 +11,7 @@ import { createEventRequest } from '../../../models/createEvent/createEvent.Requ
 import { MyHttpService } from '../../../services/MyHttpService';
 import { error } from 'console';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { CalendarEvent } from 'angular-calendar';
 
 @Component({
   selector: 'app-organizer-modal',
@@ -24,18 +25,14 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrl: './organizer-modal.component.css'
 })
 export class OrganizerModalComponent {
-  eventForm: FormGroup;
+  eventForm!: FormGroup;
   isOpen = false;
+  disableFormControls = false;
   
-  constructor(@Inject(MAT_DIALOG_DATA) public data: { date: Date }, private dialogRef: MatDialogRef<OrganizerModalComponent>,private fb: FormBuilder, private eventService: eventService, private myHttp: MyHttpService){
-    this.eventForm = this.fb.group({
-      eventName: ['', Validators.required],
-      eventDescription: ['', Validators.required],
-      eventLocation: ['', Validators.required],
-      // eventDate: ['', Validators.required],
-      eventStartTime: ['', Validators.required],
-      eventMaxNumberOfPeople: ['', [Validators.required, Validators.min(1)]]
-    });
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { date: Date, eventClicked: boolean, eventData: any }, private dialogRef: MatDialogRef<OrganizerModalComponent>,private fb: FormBuilder, private eventService: eventService, private myHttp: MyHttpService){
+    this.createForm();
+    this.fillForm();
+    this.disableForm();
   }
 
   get f() { return this.eventForm.controls; }
@@ -46,7 +43,7 @@ export class OrganizerModalComponent {
       
       this.myHttp.createEvent(request).subscribe((response) => {
   
-        this.eventService.addEvent(request);
+        this.eventService.addOwnEvent(request);
         this.dialogRef.close(this.eventForm.value);
       }, (error) => {
         console.log(error);
@@ -72,6 +69,45 @@ export class OrganizerModalComponent {
     
     }
   }
+
+  createForm(){
+    this.eventForm = this.fb.group({
+      eventName: ['', Validators.required],
+      eventDescription: ['', Validators.required],
+      eventLocation: ['', Validators.required],
+      // eventDate: ['', Validators.required],
+      eventStartTime: ['', Validators.required],
+      eventMaxNumberOfPeople: ['', [Validators.required, Validators.min(1)]]
+    });
+  }
+
+  disableForm() {
+    console.log('About to disable form');
+    console.log(this.data.eventClicked);
+    if (this.data.eventClicked){
+      this.eventForm.get('eventName')?.disable();
+      this.eventForm.get('eventDescription')?.disable();
+      this.eventForm.get('eventLocation')?.disable();
+      this.eventForm.get('eventStartTime')?.disable();
+      this.eventForm.get('eventMaxNumberOfPeople')?.disable(); 
+      this.disableFormControls = true;
+    }
+  }
+
+  fillForm(){
+    if (this.data.eventData){
+      const events = this.eventService.getEvents();
+      const foundEvent = events.find((event: any) => event.title === this.data.eventData.title);
+
+      this.eventForm.get('eventName')?.setValue(foundEvent.title);
+      this.eventForm.get('eventDescription')?.setValue(foundEvent.derscription);
+      this.eventForm.get('eventLocation')?.setValue(foundEvent.eventLocation);
+      this.eventForm.get('eventStartTime')?.setValue(foundEvent.eventStartTime);
+      this.eventForm.get('eventMaxNumberOfPeople')?.setValue(foundEvent.eventMaxNumberOfPeople); 
+    }
+  }
+
+
 
   
 

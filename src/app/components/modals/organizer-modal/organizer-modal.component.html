@@ -55,7 +55,7 @@
     </mat-dialog-content>
     <mat-dialog-actions>
       <button mat-button (click)="onCancel()">Cancel</button>
-      <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!eventForm.valid">
+      <button *ngIf="!disableFormControls" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!eventForm.valid">
         Create Event
       </button>
     </mat-dialog-actions>

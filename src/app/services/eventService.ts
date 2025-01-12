@@ -9,23 +9,7 @@ import { addHours } from "date-fns";
 })
 export class eventService{
 
-    private events = [{
-        title: 'New Event',
-        start: new Date(),
-        end: addHours(new Date(), 1),
-        color: { primary: '#ad2121', secondary: '#FAE3E3' },
-        derscription: 'temp',
-        eventLocation: 'temp',
-        eventMaxNumberOfPeople: 2
-
-        },
-        {
-          title: 'New Event_2',
-          start: new Date(),
-          end: addHours(new Date(), 1),
-          color: { primary: '#ad2121', secondary: '#FAE3E3' },
-          },
-      ];
+    private events: any = [];
 
 
     setEvents(data: any){
@@ -37,22 +21,40 @@ export class eventService{
     }
 
     
-    addEvent(event: createEventRequest){
+    transformEvents(events: Array<createEventRequest>){
+        const newEvents: any = []
+
+        events.forEach((event) => {
+            const newEvent = {
+                title: event.eventName,
+                start: new Date(event.eventDate),
+                end: addHours(new Date(event.eventDate), 2),
+                color: { primary: '#ad2121', secondary: '#FAE3E3' },
+                derscription: event.eventDescription,
+                eventLocation: event.eventLocation,
+                eventMaxNumberOfPeople: 2
+            }
+            newEvents.push(newEvent);
+
+        })
+        return newEvents;
+    }
+
+    addOwnEvent(event: createEventRequest){
         const newEvent = {
             title: event.eventName,
             start: new Date(event.eventDate),
             end: addHours(new Date(event.eventDate), 2),
-            color: { primary: '#ad2121', secondary: '#FAE3E3' },
+            color: { primary: '#0000FF', secondary: '#ADD8E6' }, 
             derscription: event.eventDescription,
             eventLocation: event.eventLocation,
             eventMaxNumberOfPeople: 2
         }
-        console.log('New Event Created');
-        console.log(newEvent);
-        this.events = [...this.events, newEvent]; 
-        // this.events.push(newEvent);
-        console.log(this.events);
-        
+        // console.log("addEvent ---- eventService: this.events: ");
+        // console.log(this.events);
+        this.events = [...this.events, newEvent];    
+        // console.log("after the push");
+        // console.log(this.events);
     }
 
     

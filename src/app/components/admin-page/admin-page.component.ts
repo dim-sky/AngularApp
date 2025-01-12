@@ -51,7 +51,7 @@ export class AdminPageComponent {
       (response) => {
         alert("Ο χρήστης επιβεβαιώθηκε");
         this.data = this.data.filter((user: { userId: any; }) => user.userId !== userToBeRemoved.userId);
-        console.log(this.data);
+        // console.log(this.data);
       },
       (error) => {
         console.log(error);

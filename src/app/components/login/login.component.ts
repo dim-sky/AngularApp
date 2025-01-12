@@ -10,6 +10,7 @@ import { UserService } from '../../services/userService';
 import { NavigationService } from '../../services/navigationService';
 import { error } from 'console';
 import { UserDetails } from '../../models/otherModels/userDetails';
+import { eventService } from '../../services/eventService';
 
 
 @Component({
@@ -29,7 +30,8 @@ export class LoginComponent {
     private router: Router,
     private myHttp: MyHttpService,
     private userService: UserService,
-    private navigationService: NavigationService
+    private navigationService: NavigationService,
+    private eventService: eventService
   ) {
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
@@ -53,10 +55,7 @@ export class LoginComponent {
 
     this.myHttp.logIn(request).subscribe(
       (response) => {
-        console.log('Hello World!');
-        console.log(response);
-
-        
+       // console.log('logIn success:', response);  
         this.userService.setToken(response['token']);
         this.getUserDetailsAndGoToHomePage();      
       },
@@ -74,14 +73,30 @@ export class LoginComponent {
   getUserDetailsAndGoToHomePage(){
     this.myHttp.getUserDetailsReq().subscribe(
       (response: UserDetails) => {
-        // console.log(response);
+        // console.log("Get User Details REQUEST!!!!!");
         this.userService.setUserDetails(response);
+        this.setOrganizedEvents(response.organizedEvents);
         this.navigationService.goToHomePage();
       },
       (error) => {
         console.log(error);
       }
     )
+    
+  }
+
+  setOrganizedEvents(events: Array<any>){
+
+    if (this.userService.isOrganization()){
+      
+      if (!events || !events.length || events.length <= 0 ) { return }
+      
+      events.forEach((element: any) => {
+        // console.log("About to add element: ");
+        // console.log(element)
+        this.eventService.addOwnEvent(element);
+      });
+    }
     
   }
 
