@@ -13,7 +13,7 @@ import { createEventRequest } from '../models/createEvent/createEvent.Request';
 })
 export class MyHttpService {
 
-  private apiUrl = 'http://localhost:8080/student';  // Your Spring Boot API endpoint
+  private apiUrl = '';  // Your Spring Boot API endpoint
 
   constructor(private http: HttpClient,  private endpointsService: endpointsService, private userService: UserService) { }
 

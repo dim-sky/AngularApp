@@ -7,7 +7,7 @@ import { register } from "module";
 })
 export class endpointsService{
 
-    private baseUrl = 'http://localhost:8080';
+    private baseUrl = '';
     private auth = '/auth';
     private user = '/api/user';
     private admin = '/api/admin';
