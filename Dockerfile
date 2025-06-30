@@ -10,11 +10,13 @@ RUN npm install
 COPY . .
 
 # Build the Angular application to the production mode to dist folder
-RUN npm run build --prod
+RUN npm run build -- --configuration=production
 # Use the lightweight Nginx image from the previous stage for the nginx container
 FROM nginx:stable-alpine as production-stage
 # Copy the build application from the previous stage to the Nginx container
 COPY --from=build-stage /app/dist/test_app/browser /usr/share/nginx/html
+
+RUN mv /usr/share/nginx/html/index.csr.html /usr/share/nginx/html/index.html
 # Copy the nginx configuration file
 COPY assets/nginx.conf /etc/nginx/conf.d/default.conf
 # Expose the port 80
