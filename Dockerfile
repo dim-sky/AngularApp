@@ -15,6 +15,8 @@ RUN npm run build
 FROM nginx:stable-alpine as production-stage
 # Copy the build application from the previous stage to the Nginx container
 COPY --from=build-stage /app/dist/test_app/browser /usr/share/nginx/html
+# Replace and rename index.html with index.csr.html 
+RUN mv /usr/share/nginx/html/index.csr.html /usr/share/nginx/html/index.html
 # Copy the nginx configuration file
 COPY assets/nginx.conf /etc/nginx/conf.d/default.conf
 # Expose the port 80
