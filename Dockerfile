@@ -10,7 +10,7 @@ RUN npm install
 COPY . .
 
 # Build the Angular application to the production mode to dist folder
-RUN npm run build --prod
+RUN npm run build 
 # Use the lightweight Nginx image from the previous stage for the nginx container
 FROM nginx:stable-alpine as production-stage
 # Copy the build application from the previous stage to the Nginx container
